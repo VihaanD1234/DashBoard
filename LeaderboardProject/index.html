@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimal Firebase Leaderboard</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .form-group {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #f4f4f4;
+            border-radius: 8px;
+        }
+
+        input {
+            padding: 0.4rem;
+            margin-right: 0.5rem;
+        }
+
+        button {
+            padding: 0.4rem 1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Top Scores</h2>
+    <div id="leaderboard">Loading scores...</div>
+
+    <div class="form-group">
+        <h3>Submit Your Score</h3>
+        <input type="text" id="nameInput" placeholder="Player Name" required>
+        <input type="number" id="scoreInput" placeholder="Score" required>
+        <button onclick="submitScore()">Submit</button>
+    </div>
+
+    <!-- Firebase SDK (Modular) -->
+    <script type="module">
+        import { initializeApp } from "https://gstatic.com";
+        import {
+            getFirestore,
+            collection,
+            addDoc,
+            query,
+            orderBy,
+            limit,
+            onSnapshot
+        } from "https://gstatic.com";
+
+        // TODO: Replace with your own Firebase SDK configuration
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_://firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_://appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Fetch & display leaderboard in real-time
+        const q = query(collection(db, "scores"), orderBy("score", "desc"), limit(10));
+        onSnapshot(q, (snapshot) => {
+            const leaderboardDiv = document.getElementById("leaderboard");
+            leaderboardDiv.innerHTML = ""; // Clear current list
+
+            let rank = 1;
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                leaderboardDiv.innerHTML += `
+                    <div class="leaderboard-item">
+                        <strong>#${rank} - ${data.name}</strong>
+                        <span>${data.score}</span>
+                    </div>
+                `;
+                rank++;
+            });
+        });
+
+        // Submit new score to database
+        window.submitScore = async function () {
+            const name = document.getElementById("nameInput").value;
+            const score = parseInt(document.getElementById("scoreInput").value);
+
+            if (!name || isNaN(score)) {
+                alert("Please enter a valid name and score.");
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, "scores"), {
+                    name: name,
+                    score: score,
+                    timestamp: Date.now()
+                });
+                alert("Score submitted!");
+                document.getElementById("scoreInput").value = ""; // Reset form
+            } catch (e) {
+                console.error("Error adding document: ", e);
+            }
+        };
+    </script>
+</body>
+
+</html>
