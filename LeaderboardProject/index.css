@@ -1,0 +1,83 @@
+#leaderboard {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+}
+
+.leaderboard-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: #f8fbff;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.leaderboard-item span {
+    background: #ffffff;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 4rem;
+    text-align: center;
+    overflow: hidden;
+}
+
+.form-group {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: #f4f4f4;
+    border-radius: 8px;
+}
+
+h2 {
+    background: #ffffff;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+h1 {
+    background: #ffffff;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+h3 {
+    background: #ffffff;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+input {
+    padding: 0.4rem;
+    margin-right: 0.5rem;
+}
+
+button {
+    padding: 0.4rem 1rem;
+}
+
+a {
+    color: #000000;
+    text-decoration: none;
+    background: #ffffff;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    display: inline-block;
+}
+
+
+
